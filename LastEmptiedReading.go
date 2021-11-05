@@ -9,7 +9,7 @@ type LastEmptiedReading struct {
 	LastEmptied time.Time `json:"last-emptied"`
 }
 
-func randate() time.Time {
+func randTime() time.Time {
 	days := 1 + rand.Int63n(30)
 
 	min := time.Now().AddDate(0, 0, int(days*-1)).Unix()
@@ -22,6 +22,6 @@ func randate() time.Time {
 
 func NewLastEmptiedReading() *LastEmptiedReading {
 	return &LastEmptiedReading{
-		LastEmptied: randate(),
+		LastEmptied: randTime(),
 	}
 }

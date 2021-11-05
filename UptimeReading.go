@@ -8,7 +8,7 @@ type UptimeReading struct {
 }
 
 func NewUptimeReading() *UptimeReading {
-  deltaSeconds := time.Now().Unix() - randate().Unix()
+  deltaSeconds := time.Now().Unix() - randTime().Unix()
 	uptimeHours := float64(deltaSeconds / 60 / 60) // generate random uptime hours
 	return &UptimeReading{
 		Uptime:  uptimeHours,
