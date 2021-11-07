@@ -25,6 +25,11 @@ func main() {
 	e.Use(middleware.Logger())
 	e.Use(middleware.Recover())
 
+	e.Use(middleware.CORSWithConfig(middleware.CORSConfig{
+		AllowOrigins: []string{"http://localhost:3000"},
+		AllowHeaders: []string{echo.HeaderOrigin, echo.HeaderContentType, echo.HeaderAccept},
+	}))
+
 	e.GET("/ping", func(c echo.Context) error {
 		return c.JSON(http.StatusOK, struct{ Status string }{Status: "OK"})
 	})
@@ -32,7 +37,8 @@ func main() {
 	// CondenserReading
 
 	e.GET("/condenser/:id", func(c echo.Context) error {
-		return c.JSON(http.StatusOK, NewCondenserReading())
+		id := c.Param("id")
+		return c.JSON(http.StatusOK, NewCondenserReading(id))
 	}) // Endpoint to get CondenserReading
 
 	// VolumeReading
@@ -70,7 +76,7 @@ func main() {
 
 	httpPort := os.Getenv("HTTP_PORT")
 	if httpPort == "" {
-		httpPort = "8080"
+		httpPort = "7777"
 	}
 
 	e.Logger.Fatal(e.Start(":" + httpPort))
